@@ -1,0 +1,8 @@
+
+# dodaj rpozytorium do argocd (awscli)
+argocd repo add https://charts.longhorn.io \
+  --type helm \
+  --name longhorn
+
+
+
