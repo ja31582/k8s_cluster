@@ -6,14 +6,9 @@ helm repo update
 
 helm search repo jfrog/artifactory --versions
 
+#sprawdź wersję i uzupełnij w application.yaml
 
-  argocd app create jfrog-artifactory-app \
-  --repo jfrog \
-  --chart artifactory \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace jfrog \
-  --helm-values values.yaml \
-  --sync-policy automated
+argocd app create -f ./jfrog-artifactory/application.yaml 
 
 
 argocd app get jfrog-artifactory-app
