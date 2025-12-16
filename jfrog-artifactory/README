@@ -1,0 +1,9 @@
+argocd app create jfrog-artifactory-app \
+  --repo https://github.com/ja31582/k8s_cluster.git \
+  --path ./jfrog-artifactory \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace jfrog \
+  --sync-policy automated
+
+argocd app get jfrog-artifactory-app
+argocd app sync jfrog-artifactory-app

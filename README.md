@@ -138,6 +138,13 @@ argocd app create longhorn-app \
   --dest-namespace longhorn-system \
   --sync-policy automated    
 
+argocd app create longhorn-app \
+  --repo https://github.com/ja31582/k8s_cluster.git \
+  --path ./jfrog-artifactory \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace jfrog \
+  --sync-policy automated     
+
 ---
 #listowanie aplikacji
 argocd app list

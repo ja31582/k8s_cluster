@@ -1,0 +1,18 @@
+artifactory:
+  persistence:
+    type: pvc
+    storageClass: longhorn
+    size: 20Gi
+  replicas: 2
+
+postgresql:
+  enabled: true
+  persistence:
+    storageClass: longhorn
+    size: 10Gi
+
+nginx:
+  replicaCount: 1
+
+service:
+  type: LoadBalancer

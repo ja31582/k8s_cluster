@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jfrog-artifactory
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.jfrog.io
+    chart: artifactory
+    targetRevision: 4.35.0  # sprawdź najnowszą stabilną wersję
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jfrog
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
