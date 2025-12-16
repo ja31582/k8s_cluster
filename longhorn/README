@@ -1,0 +1,32 @@
+# instalacja
+k8s_cluster/
+    └── longhorn/
+        └── application.yaml
+
+git add k8s_cluster/longhorn/application.yaml
+git commit -m "longhorn: set replicaCount to 2, enable defaultClass, create namespace"
+git push
+
+
+
+# deinstalacja longhoorn
+helm uninstall longhorn -n longhorn-system
+kubectl delete storageclass longhorn
+kubectl delete namespace longhorn-system
+
+for crd in $(kubectl get crd | grep longhorn | awk '{print $1}'); do
+  kubectl delete $crd --all --all-namespaces
+done
+
+for crd in $(kubectl get crd | grep longhorn | awk '{print $1}'); do
+  kubectl patch crd $crd -p '{"metadata":{"finalizers":[]}}' --type=merge
+done
+
+kubectl get crd | grep longhorn | awk '{print $1}' | xargs kubectl delete crd
+
+kubectl get crd engineimages.longhorn.io -o json \
+| jq '.metadata.finalizers=[]' \
+
+kubectl get ns | grep longhorn
+kubectl get sc | grep longhorn
+kubectl get pods -A | grep longhorn
