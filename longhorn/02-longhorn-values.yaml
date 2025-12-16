@@ -1,5 +1,0 @@
-defaultSettings:
-  replicaCount: 2
-persistence:
-  defaultClass: true
-allowVolumeExpansion: true
