@@ -1,4 +1,5 @@
 argocd repo add https://charts.jfrog.io --type helm --name jfrog #--username admin --password kaLIst01! (optional)
+argocd repo list
 
 helm repo add jfrog https://charts.jfrog.io
 helm repo update
