@@ -8,10 +8,10 @@ spec:
   source:
     repoURL: https://charts.jfrog.io
     chart: artifactory
-    targetRevision: "7.125.8"
+    targetRevision: "7.125.8"      # Zmieniono na istniejącą wersję
     helm:
       valueFiles:
-        - values.yaml
+        - values.yaml              # Wszystkie wartości poniżej powinny być w tym pliku
   destination:
     server: https://kubernetes.default.svc
     namespace: jfrog
