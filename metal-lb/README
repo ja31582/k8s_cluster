@@ -1,0 +1,25 @@
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.3/config/manifests/metallb-native.yaml
+
+
+#konfiguracja puli adresowej IP oraz reklamy L2 dla MetalLB
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: my-ip-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 10.0.0.70-10.0.0.80
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2-advert
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - my-ip-pool
+
+
+kubectl apply -f metallb-config.yaml
