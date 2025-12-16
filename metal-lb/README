@@ -76,6 +76,14 @@ argocd app create k8s-dashboard-app \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace kubernetes-dashboard \
   --sync-policy automated  
+
+
+argocd app create test-lb-nginx-app \
+  --repo https://github.com/ja31582/k8s_cluster.git \
+  --path ./test-lb-nginx \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace test-lb-nginx \
+  --sync-policy automated    
 ---
 #listowanie aplikacji
 argocd app list
