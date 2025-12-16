@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://charts.jfrog.io
     chart: artifactory
-    targetRevision: 4.35.0  # sprawdź najnowszą stabilną wersję
+    targetRevision: "7.125.8"
     helm:
       valueFiles:
         - values.yaml
