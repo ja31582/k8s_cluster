@@ -1,0 +1,19 @@
+defaultSettings:
+  replicaCount: 2
+  defaultDataPath: /var/lib/longhorn
+  backupTarget: ""
+  backupTargetCredentialSecret: ""
+  guaranteedEngineManagerCPU: 0
+  guaranteedReplicaManagerCPU: 0
+
+persistence:
+  defaultClass: true
+  reclaimPolicy: Delete
+  defaultClassReplicaCount: 2
+
+longhornManager:
+  tolerations: []
+  nodeSelector: {}
+
+longhornUI:
+  replicas: 1
