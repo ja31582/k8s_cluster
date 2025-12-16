@@ -1,0 +1,14 @@
+#install docker
+sudo snap install docker
+
+#build the image
+sudo docker build -t nginx-awscli:latest .
+
+#nginx-awscli:latest → nazwa lokalnego obrazu
+#na końcu ścieżka
+
+#test
+sudo docker run -it --rm nginx-awscli:latest bash
+
+aws --version
+nginx -v
