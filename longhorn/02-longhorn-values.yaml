@@ -1,34 +1,5 @@
-# Longhorn Helm values dla 2-node klastra
-replicaCount: 2  # liczba replik wolumenu
-
-# Namespace Longhorn
-namespace: longhorn-system
-
-# Ustawienia domyślne Longhorn
 defaultSettings:
-  # Wyłącza soft anti-affinity, aby repliki mogły być rozmieszczone na 2 nodach
-  replicaSoftAntiAffinity: disabled
-  # Wartość minimalna dla replik przy 2 nodach
-  replicaAutoBalance: disabled
-
-# StorageClass
+  replicaCount: 2
 persistence:
-  defaultClass: true  # tworzy StorageClass longhorn jako domyślną
-
-# UI i dashboard
-ui:
-  enabled: true
-
-# Backup i snapshot
-backup:
-  enabled: true
-  backupTarget: ""  # zostawić puste, można skonfigurować później np. NFS/S3
-  concurrency: 3
-  schedule: ""  # brak harmonogramu domyślnie
-  retention: 5
-  incremental: true
-
-# Pozostałe komponenty
-csi:
-  attachControllerImage:
-    pullPolicy: IfNotPresent
+  defaultClass: true
+allowVolumeExpansion: true

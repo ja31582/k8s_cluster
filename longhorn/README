@@ -1,20 +1,22 @@
 # Dodaj repo Helm Longhorn do Argo CD (jeśli nie dodane)
-argocd repo add https://charts.longhorn.io \
-  --type helm \
-  --name longhorn
+helm repo add longhorn https://charts.longhorn.io
+helm repo update
+helm search repo longhorn/longhorn --versions
 
 
 # Sprawdź, czy repo jest widoczne:
 argocd repo list
 
 # Utwórz aplikację Argo CD dla Longhorna
-argocd app create longhorn \
-  --repo longhorn \
+argocd app create longhorn-app \
+  --repo https://charts.longhorn.io \
   --helm-chart longhorn \
+  --helm-version v1.10.0 \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace longhorn-system \
   --sync-policy automated \
-  --values ./longhorn/longhorn-values.yaml
+  --values ./longhorn/02-longhorn-values.yaml
+
 
 
 --helm-chart longhorn – nazwa chartu w repo Helm.
