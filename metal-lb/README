@@ -69,6 +69,13 @@ argocd app create grafana-app \
   --dest-namespace monitoring \
   --sync-policy automated
 ---
+#listowanie aplikacji
+argocd app list
+
+#sprawdzenie statusu aplikacji
+argocd app get loadbalancer-app
+
+
 
 
 
