@@ -1,8 +1,28 @@
-
-# dodaj rpozytorium do argocd (awscli)
+# Dodaj repo Helm Longhorn do Argo CD (jeśli nie dodane)
 argocd repo add https://charts.longhorn.io \
   --type helm \
   --name longhorn
 
 
+# Sprawdź, czy repo jest widoczne:
+argocd repo list
 
+# Utwórz aplikację Argo CD dla Longhorna
+argocd app create longhorn \
+  --repo longhorn \
+  --helm-chart longhorn \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace longhorn-system \
+  --sync-policy automated \
+  --values ./longhorn/longhorn-values.yaml
+
+
+--helm-chart longhorn – nazwa chartu w repo Helm.
+
+--values ./longhorn/longhorn-values.yaml – Twój plik z niestandardowymi ustawieniami.
+
+# Synchronizacja i weryfikacja
+sudo argocd app sync longhorn
+sudo argocd app get longhorn
+kubectl get pods -n longhorn-system
+kubectl get sc

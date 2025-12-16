@@ -6,6 +6,7 @@ argocd app create longhorn \
   --sync-policy automated \
   --values ./longhorn/longhorn-values.yaml
 
+
 #sprawdzenie statusu aplikacji
 argocd app get longhorn
 kubectl get pods -n longhorn-system
