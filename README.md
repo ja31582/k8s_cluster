@@ -73,6 +73,21 @@ virt-install \
   --graphics none
 
  ---
+### na kazdym nodzie zwiększ   /dev/mapper/ubuntu--vg-ubuntu--lv
+# sprawdź wolne miejsce w VG
+sudo vgdisplay ubuntu-vg
+
+# powiększ root LV o np. 15G
+sudo lvextend -L +15G /dev/mapper/ubuntu--vg-ubuntu--lv
+
+# powiększ FS ext4
+sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+
+# sprawdź nowy rozmiar
+df -h /
+---
+
+
 
 
 # Pobierz najnowszą wersję (sprawdź najnowszą tutaj: https://github.com/argoproj/argo-cd/releases)
