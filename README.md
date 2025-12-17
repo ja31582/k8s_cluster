@@ -100,7 +100,7 @@ sudo mv argocd /usr/local/bin/
 argocd version
 
 # logowanie do ArgoCD
-argocd login 10.0.0.80 --username admin --password kaLIst01! --insecure
+argocd login 10.0.0.82 --username admin --password kaLIst01! --insecure
 
 # dodanie repozytorium
 argocd repo add https://github.com/uzytkownik/nazwarepo.git

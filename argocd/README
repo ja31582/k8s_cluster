@@ -9,7 +9,8 @@ argocd app create argocd-root \
 Argo CD nie obsługuje wildcardów (*) w --path
 argocd app create tworzy Application, a nie ApplicationSet
 ApplicationSet sam tworzy Applications
---- TAK ŹLE
+
+--- #TAK ŹLE
 argocd app create largocd-apps \
   --repo https://github.com/ja31582/k8s_cluster.git \
   --path ./argocd/* \
