@@ -1,3 +1,5 @@
+kubectl create namespace monitoring
+
 argocd app create argocd-root \
   --repo https://github.com/ja31582/k8s_cluster.git \
   --path argocd/tempo \

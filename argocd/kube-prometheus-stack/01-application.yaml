@@ -4,6 +4,10 @@ metadata:
   name: monitoring
   namespace: argocd
 spec:
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=false
+      - Replace=true
   project: default
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
