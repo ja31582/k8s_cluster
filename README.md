@@ -180,3 +180,17 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.3/confi
 
 
 #konfiguracja puli adresowej IP oraz reklamy L2 dla MetalLB
+
+# przydatene komendy
+
+# port forwarding
+kubectl port-forward -n argocd services/argocd-server 8000:80
+
+kubectl delete pod -n argocd --field-selector=status.phase=Failed
+kubectl delete pod -n argocd --field-selector=status.phase=Evicted
+
+kubectl delete pod -A --field-selector=status.phase=Evicted
+kubectl delete pod -A --field-selector=status.phase=Failed
+
+kubectl rollout restart deployment controller -n metallb-system
+kubectl rollout restart daemonset speaker -n metallb-system
