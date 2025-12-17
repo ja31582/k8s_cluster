@@ -5,7 +5,7 @@ metadata:
   namespace: test-lb-nginx
 spec:
   type: LoadBalancer
-  LoadBalancerIP: 10.0.0.90
+  loadBalancerIP: 10.0.0.90
   selector:
     app: nginx
   ports:
