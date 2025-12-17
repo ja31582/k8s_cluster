@@ -6,12 +6,23 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.jfrog.io
-    chart: artifactory
-    targetRevision: "107.125.8"
-    helm:
-      valueFiles:
-        - values.yaml
+  repoURL: https://github.com/ja31582/k8s_cluster.git
+  targetRevision: main
+  path: jfrog
+  helm:
+    values: |
+    artifactory:
+      persistence:
+        type: pvc
+        storageClass: longhorn
+        size: 10Gi
+      replicas: 2
+
+    postgresql:
+      enabled: true
+      persistence:
+        storageClass: longhorn
+        size: 5Gi
   destination:
     server: https://kubernetes.default.svc
     namespace: jfrog

@@ -2,17 +2,16 @@ artifactory:
   persistence:
     type: pvc
     storageClass: longhorn
-    size: 10Gi      #pwonno byc 20
+    size: 10Gi      
   replicas: 2
 
 postgresql:
   enabled: true
   persistence:
     storageClass: longhorn
-    size: 5Gi       #powinno byc 10
-
-nginx:
+    size: 5Gi       
   replicaCount: 1
+  
   securityContext:
     runAsUser: 0
     runAsGroup: 0
