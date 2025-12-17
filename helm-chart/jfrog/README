@@ -1,0 +1,43 @@
+# testing jfrog helm chart with custom values.yaml
+------------------------------
+helm repo add jfrog https://charts.jfrog.io
+helm repo update
+
+helm template jfrog jfrog/artifactory -f ./helm-chart/jfrog/value.yaml --namespace jfrog
+------------------------------
+
+# download jfrog artifactory helm chart
+helm pull jfrog/artifactory --untar -d ./helm-chart/jfrog
+------------------------------
+
+
+
+
+Argo CD nie obsługuje wildcardów (*) w --path
+argocd app create tworzy Application, a nie ApplicationSet
+ApplicationSet sam tworzy Applications
+
+--- #TAK ŹLE
+argocd app create largocd-apps \
+  --repo https://github.com/ja31582/k8s_cluster.git \
+  --path ./argocd/* \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace argocd \
+  --sync-policy automated
+  
+  ---
+
+helm-charts/<app>/values.yaml – konfiguracja specyficzna dla aplikacji (np. port, LoadBalancerIP, persistent storage, dashboardy).
+monitoring-apps/<app>-app.yaml – ArgoCD Application definiujące: repo, chart, namespace, politykę sync.
+
+helm-charts/
+├── grafana/
+│   └── values.yaml
+├── prometheus/
+│   └── values.yaml
+├── metrics-server/
+│   └── values.yaml
+monitoring-apps/
+├── grafana-app.yaml
+├── prometheus-app.yaml
+├── metrics-server-app.yaml

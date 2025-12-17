@@ -1,4 +1,5 @@
-
+# listuj apikacje w argocd
 argocd app list
 
-argocd app delete <nazwa-aplikacji> --cascade
+# usuń aplikację z argocd
+argocd app delete k8s-dashboard-app --cascade
