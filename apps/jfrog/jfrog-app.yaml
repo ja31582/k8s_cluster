@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ja31582/k8s_cluster.git
-    targetRevision: main
+    targetRevision: 7.53.7
     path: helm-chart/jfrog/artifactory   # <-- poprawiona ścieżka do Chart.yaml
     helm:
       valueFiles:
