@@ -12,10 +12,10 @@ spec:
       targetRevision: 10.0.14
       helm:
         valueFiles:
-          - $values/jfrog/values.yaml   # wskazanie na plik z drugiego źródła
+          - $values/jfrog/values.yaml   # wskazuje na plik z drugiego źródła
     - repoURL: https://github.com/ja31582/k8s_cluster.git
       targetRevision: main
-      ref: values                      # alias użyty powyżej w $values/...
+      ref: values                      # alias użyty powyżej jako $values
       path: .
   destination:
     server: https://kubernetes.default.svc
