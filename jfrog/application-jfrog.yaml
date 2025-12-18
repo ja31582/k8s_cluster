@@ -1,5 +1,4 @@
 
-# application-jfrog.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -9,8 +8,8 @@ spec:
   project: default
   sources:
     - repoURL: https://charts.jfrog.io
-      chart: artifactory-oss
-      targetRevision: 3.3.0
+      chart: artifactory
+      targetRevision: 10.0.14
       helm:
         valueFiles:
           - $values/jfrog/values.yaml
