@@ -1,0 +1,33 @@
+argocd app create jfrog-app \
+  --repo https://charts.jfrog.io \
+  --helm-chart artifactory \
+  --revision 10.0.14 \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace jfrog \
+  --sync-policy automated \
+  --helm-set artifactory.image.tag=7.68.15 \
+  --helm-set artifactory.persistence.size=10Gi \
+  --helm-set artifactory.resources.requests.memory=2Gi \
+  --helm-set artifactory.resources.requests.cpu=1 \
+  --helm-set artifactory.resources.limits.memory=4Gi \
+  --helm-set artifactory.resources.limits.cpu=2 \
+  --helm-set artifactory.livenessProbe.initialDelaySeconds=300 \
+  --helm-set artifactory.readinessProbe.initialDelaySeconds=300 \
+  --helm-set nginx.enabled=true \
+  --helm-set nginx.service.type=LoadBalancer \
+  --helm-set nginx.service.loadBalancerIP=10.0.0.80 \
+  --helm-set postgresql.persistence.size=5Gi \
+  --helm-set postgresql.resources.requests.memory=512Mi \
+  --helm-set postgresql.resources.requests.cpu=250m \
+  --helm-set postgresql.resources.limits.memory=1Gi \
+  --helm-set postgresql.resources.limits.cpu=500m \
+  --helm-set artifactory.admin.password='kaLIst01!'
+
+# take a password
+kubectl get secret jfrog-app-artifactory-access-config -n jfrog -o jsonpath='{.data.identity\.admin\.password}' | base64 -d
+
+# de
+  argocd app set jfrog-app \
+  --helm-set artifactory.admin.password='TwojeBezpieczneHaslo123!'
+
+
