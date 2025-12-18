@@ -2,16 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: jfrog
-  namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/twoje-repo/helm-charts
-    path: jfrog
+    repoURL: https://github.com/ja31582/k8s_cluster.git
     targetRevision: main
+    path: helm-chart/jfrog
     helm:
       valueFiles:
-        - helm-charts/jfrog/values.yaml
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: jfrog

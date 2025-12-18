@@ -1,0 +1,8 @@
+# Jeśli ApplicationSet już istnieje w ArgoCD:
+argocd app sync v-it-apps
+# Spowoduje wygenerowanie aplikacji jfrog i innych z katalogu apps/*.
+
+#Jeśli ApplicationSet nie istnieje, utwórz go:
+kubectl apply -f apps/applicationset.yaml
+#ArgoCD utworzy ApplicationSet w namespace argocd.
+#ApplicationSet automatycznie wygeneruje aplikację jfrog.
