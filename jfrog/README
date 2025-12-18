@@ -26,8 +26,7 @@ argocd app create jfrog-app \
 # take a password
 kubectl get secret jfrog-app-artifactory-access-config -n jfrog -o jsonpath='{.data.identity\.admin\.password}' | base64 -d
 
-# de
-  argocd app set jfrog-app \
-  --helm-set artifactory.admin.password='TwojeBezpieczneHaslo123!'
+# configure the password in the existing infrastructure or overwrite the password
+argocd app set jfrog-app --helm-set artifactory.admin.password='TwojeBezpieczneHaslo123!'
 
 
