@@ -1,49 +1,50 @@
 
-# =========================
-# Minimalna konfiguracja JFrog Artifactory OSS (chart 3.3.0)
-# =========================
+# values.yaml — JFrog Artifactory OSS (chart: artifactory-oss)
+# zgodny ze strukturą OSS: artifactory.adminPassword, postgresql.*, nginx.*  (OSS)
+# Źródła: ArtifactHub + repo jfrog/charts (values/README)
 
-# --- Artifactory (aplikacja)
+# --- Artifactory (subchart)
 artifactory:
-  # Hasło administratora (GUI): admin / <poniżej>
-  admin.password: "kaLIst01!"
+  # Hasło administratora GUI (używane przy pierwszym bootstrapie)
+  adminPassword: "kaLIst01!"     # klucz właściwy dla OSS chartu
+  # Zasoby — minimalne pod test/dev (Java wymaga ~1G więcej limitu niż Xmx)
+  artifactory:
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 500m
+      limits:
+        memory: 2Gi
+        cpu: "1"
+    javaOpts:
+      xms: "1g"
+      xmx: "1g"
 
-  # Zasoby (test/dev; produkcja wymaga większych)
-  resources:
-    requests:
-      memory: 1Gi
-      cpu: 500m
-    limits:
-      memory: 2Gi
-      cpu: "1"
-
-  # Wolumen danych Artifactory
+  # Persistencja danych Artifactory (system/metadata, blobstore itp.)
   persistence:
     enabled: true
-    # Najczęściej domyślnie 20Gi — tu schodzimy do 5Gi
     size: 5Gi
-    # Jeśli chcesz wymusić StorageClass (np. Longhorn), odkomentuj:
-    # storageClass: longhorn
+    # storageClass: longhorn    # odkomentuj, jeśli chcesz konkretny SC
 
-  # Proby — dajemy dłuższe opóźnienia na start JVM/bootstrapa
-  livenessProbe:
-    enabled: true
-    initialDelaySeconds: 300
-  readinessProbe:
-    enabled: true
-    initialDelaySeconds: 300
+  # Proby — dajemy więcej czasu na start JVM/bootstrapa
+  probes:
+    liveness:
+      enabled: true
+      initialDelaySeconds: 300
+    readiness:
+      enabled: true
+      initialDelaySeconds: 300
 
-# --- PostgreSQL (subchart)
+# --- PostgreSQL (subchart; OSS wspiera opcjonalny Postgres)
 postgresql:
   enabled: true
-  # Mały rozmiar PVC dla testów
+  auth:
+    # Ustaw hasło Postgresa, aby uniknąć auto-generacji (ułatwia upgrade)
+    postgresPassword: "PostgresP@ss123"
   persistence:
     enabled: true
-    size: 5Gi
-    # Odkomentuj, jeśli wymagasz konkretnego SC:
+    size: 5SGi
     # storageClass: longhorn
-
-  # Zasoby PostgreSQL (minimalne do testów)
   resources:
     requests:
       memory: 512Mi
@@ -52,19 +53,12 @@ postgresql:
       memory: 1Gi
       cpu: 500m
 
-  # (Opcjonalnie) hasło do Postgresa — jeśli nie ustawisz, zostanie wygenerowane
-  # auth:
-  #   postgresPassword: "PostgresP@ss123"
-
-# --- Nginx jako frontend (LoadBalancer)
+# --- Nginx jako frontend (w chartach OSS to opcjonalny subchart)
 nginx:
   enabled: true
   service:
     type: LoadBalancer
-    # W środowiskach z metalLB/CloudLB można nadać stałe IP:
     loadBalancerIP: "10.0.0.80"
-
-  # (opcjonalnie) minimalne zasoby dla nginx
   resources:
     requests:
       cpu: 100m
@@ -73,6 +67,6 @@ nginx:
       cpu: 250m
       memory: 256Mi
 
-# --- Ingress (wyłączony; korzystamy z LB)
+# --- Ingress wyłączony — korzystamy z LoadBalancer
 ingress:
   enabled: false
