@@ -13,6 +13,7 @@ helm pull jfrog/artifactory --untar -d ./helm-chart/jfrog
 
 
 
+
 Argo CD nie obsługuje wildcardów (*) w --path
 argocd app create tworzy Application, a nie ApplicationSet
 ApplicationSet sam tworzy Applications
