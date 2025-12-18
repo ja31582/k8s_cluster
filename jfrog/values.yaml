@@ -1,45 +1,78 @@
+
+# =========================
+# Minimalna konfiguracja JFrog Artifactory OSS (chart 3.3.0)
+# =========================
+
+# --- Artifactory (aplikacja)
 artifactory:
+  # Hasło administratora (GUI): admin / <poniżej>
+  adminPassword: "kaLIst01!"
+
+  # Zasoby (test/dev; produkcja wymaga większych)
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+    limits:
+      memory: 2Gi
+      cpu: "1"
+
+  # Wolumen danych Artifactory
   persistence:
     enabled: true
-    # minimalne PVC
-    size: 10Gi
-    storageClass: longhorn
-  postgres:
-    persistence:
-      enabled: true
-      size: 5Gi
-      storageClass: longhorn
+    # Najczęściej domyślnie 20Gi — tu schodzimy do 5Gi
+    size: 5Gi
+    # Jeśli chcesz wymusić StorageClass (np. Longhorn), odkomentuj:
+    # storageClass: longhorn
 
-service:
-  type: LoadBalancer
-  loadBalancerIP: 10.0.0.81
-  port: 8081
+  # Proby — dajemy dłuższe opóźnienia na start JVM/bootstrapa
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 300
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 300
 
-replicaCount: 1
+# --- PostgreSQL (subchart)
+postgresql:
+  enabled: true
+  # Mały rozmiar PVC dla testów
+  persistence:
+    enabled: true
+    size: 1Gi
+    # Odkomentuj, jeśli wymagasz konkretnego SC:
+    # storageClass: longhorn
 
-resources:
-  requests:
-    cpu: "500m"
-    memory: "1Gi"
-  limits:
-    cpu: "1"
-    memory: "2Gi"
+  # Zasoby PostgreSQL (minimalne do testów)
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
+    limits:
+      memory: 1Gi
+      cpu: 500m
 
+  # (Opcjonalnie) hasło do Postgresa — jeśli nie ustawisz, zostanie wygenerowane
+  # auth:
+  #   postgresPassword: "PostgresP@ss123"
+
+# --- Nginx jako frontend (LoadBalancer)
+nginx:
+  enabled: true
+  service:
+    type: LoadBalancer
+    # W środowiskach z metalLB/CloudLB można nadać stałe IP:
+    loadBalancerIP: "10.0.0.80"
+
+  # (opcjonalnie) minimalne zasoby dla nginx
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+# --- Ingress (wyłączony; korzystamy z LB)
 ingress:
   enabled: false
-
---- # gdy uruchomiię traefik z cert-managerem
-# ingress:
-#   enabled: true
-#   hosts:
-#     - jfrog.local
-#   annotations:
-#     kubernetes.io/ingress.class: nginx
-#     cert-manager.io/cluster-issuer: letsencrypt
-#   tls:
-#     - secretName: jfrog-tls
-#       hosts:
-#         - jfrog.local
-
-
-  

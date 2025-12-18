@@ -1,0 +1,27 @@
+
+# application-jfrog.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jfrog-app
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://charts.jfrog.io
+      chart: artifactory-oss
+      targetRevision: 3.3.0
+      helm:
+        valueFiles:
+          - $values/jfrog/values.yaml
+    - repoURL: https://github.com/ja31582/k8s_cluster.git
+      targetRevision: main
+      ref: values
+      path: .
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jfrog
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

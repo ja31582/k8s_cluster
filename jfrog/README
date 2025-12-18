@@ -1,6 +1,6 @@
 argocd app create jfrog-app \
   --repo https://charts.jfrog.io \
-  --helm-chart artifactory \
+  --helm-chart artifactory \        # pro version
   --revision 10.0.14 \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace jfrog \
@@ -23,6 +23,8 @@ argocd app create jfrog-app \
   --helm-set postgresql.resources.limits.cpu=500m \
   --helm-set artifactory.admin.password='kaLIst01!'
 
+
+
 # take a password
 kubectl get secret jfrog-app-artifactory-access-config -n jfrog -o jsonpath='{.data.identity\.admin\.password}' | base64 -d
 
@@ -30,3 +32,37 @@ kubectl get secret jfrog-app-artifactory-access-config -n jfrog -o jsonpath='{.d
 argocd app set jfrog-app --helm-set artifactory.admin.password='TwojeBezpieczneHaslo123!'
 
 
+
+
+argocd app create jfrog-app \
+  --repo https://charts.jfrog.io \
+  --helm-chart artifactory-oss \
+  --revision 3.3.0 \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace jfrog \
+  --sync-policy automated \
+  --helm-set artifactory.persistence.size=5Gi \
+  --helm-set postgresql.persistence.size=1Gi \
+  --helm-set artifactory.resources.requests.memory=2Gi \
+  --helm-set artifactory.resources.requests.cpu=1 \
+  --helm-set artifactory.resources.limits.memory=4Gi \
+  --helm-set artifactory.resources.limits.cpu=2 \
+  --helm-set nginx.enabled=true \
+  --helm-set nginx.service.type=LoadBalancer \
+  --helm-set nginx.service.loadBalancerIP=10.0.0.80 \
+  --helm-set artifactory.admin.password='kaLIst01!'
+
+  
+argocd app create jfrog-app \
+  --repo https://charts.jfrog.io \
+  --helm-chart artifactory-oss \
+  --revision 3.3.0 \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace jfrog \
+  --sync-policy automated \
+  --helm-set-string artifactory.persistence.size=5Gi \
+  --helm-set-string postgresql.persistence.size=1Gi \
+  --helm-set-string artifactory.adminPassword='kaLIst01!' \
+  --helm-set nginx.enabled=true \
+  --helm-set nginx.service.type=LoadBalancer \
+  --helm-set nginx.service.loadBalancerIP=10.0.0.80
