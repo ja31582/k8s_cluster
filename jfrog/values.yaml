@@ -1,9 +1,24 @@
 
+# values.yaml — JFrog Artifactory OSS (chart: artifactory-oss 107.125.9)
+
+# --- Ustawienia specyficzne dla Artifactory (OSS)
 artifactory:
+  # Hasło administratora GUI przy pierwszym bootstrapie
   adminPassword: "kaLIst01!"
-  persistence:
-    enabled: true
-    size: 5Gi
+  # Zasoby i JVM (minimalne dla dev)
+  artifactory:
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 500m
+      limits:
+        memory: 2Gi
+        cpu: "1"
+    javaOpts:
+      xms: "1g"
+      xmx: "1g"
+
+  # Proby — dłuższe opóźnienia na start JVM/bootstrapa
   probes:
     liveness:
       enabled: true
@@ -11,22 +26,48 @@ artifactory:
     readiness:
       enabled: true
       initialDelaySeconds: 300
-  installer:
-    installerInfo: ""   # wyłączamy problematyczne adnotacje
 
+  # (Opcjonalnie) wyłączenie problematycznych adnotacji
+  installer:
+    installerInfo: ""   # redukuje ryzyko błędów patchy z nietypowymi znakami
+
+# --- Persistencja danych Artifactory (TOP-LEVEL w OSS)
+persistence:
+  enabled: true
+  size: 5Gi
+  # storageClass: longhorn
+
+# --- PostgreSQL (subchart)
 postgresql:
   enabled: true
   auth:
     postgresPassword: "PostgresP@ss123"
   persistence:
     enabled: true
-    size: 3Gi
+    size: 1Gi
+    # storageClass: longhorn
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
+    limits:
+      memory: 1Gi
+      cpu: 500m
 
+# --- Nginx jako frontend (LoadBalancer)
 nginx:
   enabled: true
   service:
     type: LoadBalancer
     loadBalancerIP: "10.0.0.80"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
 
+# --- Ingress wyłączony; korzystamy z LB
 ingress:
   enabled: false
