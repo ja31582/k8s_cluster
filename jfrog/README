@@ -51,6 +51,7 @@ argocd app create jfrog-app \
   --helm-set nginx.service.type=LoadBalancer \
   --helm-set nginx.service.loadBalancerIP=10.0.0.80 \
   --helm-set artifactory.admin.password='kaLIst01!'
+  --helm-set artifactory.admin.password='TwojeBezpieczneHaslo123!'
 
   
 argocd app create jfrog-app \

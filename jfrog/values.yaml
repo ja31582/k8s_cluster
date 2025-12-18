@@ -6,7 +6,7 @@
 # --- Artifactory (aplikacja)
 artifactory:
   # Hasło administratora (GUI): admin / <poniżej>
-  adminPassword: "kaLIst01!"
+  admin.password: "kaLIst01!"
 
   # Zasoby (test/dev; produkcja wymaga większych)
   resources:
