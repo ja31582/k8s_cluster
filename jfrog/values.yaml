@@ -39,7 +39,7 @@ postgresql:
   # Mały rozmiar PVC dla testów
   persistence:
     enabled: true
-    size: 1Gi
+    size: 5Gi
     # Odkomentuj, jeśli wymagasz konkretnego SC:
     # storageClass: longhorn
 
