@@ -1,3 +1,4 @@
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,11 +8,14 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ja31582/k8s_cluster.git
-    targetRevision: 7.53.7
-    path: helm-chart/jfrog/artifactory   # <-- poprawiona ścieżka do Chart.yaml
+    targetRevision: main          # <- GIT gałąź/tag/commit (nie wersja chartu)
+    path: helm-chart/jfrog/artifactory
     helm:
+      releaseName: jfrog
+      # Plik z Twoimi wartościami znajduje się w repo, poza katalogiem chartu.
+      # W Argo CD jest dozwolone wskazanie ścieżki względnej względem katalogu chartu.
       valueFiles:
-        - ../../helm-chart/jfrog/values.yaml   # względna ścieżka do values.yaml
+        - ../../helm-chart/jfrog/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: jfrog
@@ -19,3 +23,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
