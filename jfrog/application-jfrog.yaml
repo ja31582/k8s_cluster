@@ -7,25 +7,21 @@ metadata:
 spec:
   project: default
   sources:
-    # Źródło: oficjalne repo chartów JFrog
     - repoURL: https://charts.jfrog.io
       chart: artifactory-oss
-      targetRevision: 107.111.4   # sprawdzona wersja na Artifact Hub (OSS)
+      targetRevision: 107.111.4   # lub 4.33.3 jeśli chcesz starszy
       helm:
         valueFiles:
           - $values/jfrog/values.yaml
-
-    # Źródło z Twoimi wartościami (repo Git)
     - repoURL: https://github.com/ja31582/k8s_cluster.git
       targetRevision: main
       ref: values
       path: .
-
   destination:
     server: https://kubernetes.default.svc
     namespace: jfrog
-
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:

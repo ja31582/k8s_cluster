@@ -1,32 +1,9 @@
 
-# values.yaml — JFrog Artifactory OSS (chart: artifactory-oss)
-# zgodny ze strukturą OSS: artifactory.adminPassword, postgresql.*, nginx.*  (OSS)
-# Źródła: ArtifactHub + repo jfrog/charts (values/README)
-
-# --- Artifactory (subchart)
 artifactory:
-  # Hasło administratora GUI (używane przy pierwszym bootstrapie)
-  adminPassword: "kaLIst01!"     # klucz właściwy dla OSS chartu
-  # Zasoby — minimalne pod test/dev (Java wymaga ~1G więcej limitu niż Xmx)
-  artifactory:
-    resources:
-      requests:
-        memory: 1Gi
-        cpu: 500m
-      limits:
-        memory: 2Gi
-        cpu: "1"
-    javaOpts:
-      xms: "1g"
-      xmx: "1g"
-
-  # Persistencja danych Artifactory (system/metadata, blobstore itp.)
+  adminPassword: "kaLIst01!"
   persistence:
     enabled: true
     size: 5Gi
-    # storageClass: longhorn    # odkomentuj, jeśli chcesz konkretny SC
-
-  # Proby — dajemy więcej czasu na start JVM/bootstrapa
   probes:
     liveness:
       enabled: true
@@ -34,39 +11,22 @@ artifactory:
     readiness:
       enabled: true
       initialDelaySeconds: 300
+  installer:
+    installerInfo: ""   # wyłączamy problematyczne adnotacje
 
-# --- PostgreSQL (subchart; OSS wspiera opcjonalny Postgres)
 postgresql:
   enabled: true
   auth:
-    # Ustaw hasło Postgresa, aby uniknąć auto-generacji (ułatwia upgrade)
     postgresPassword: "PostgresP@ss123"
   persistence:
     enabled: true
-    size: 5SGi
-    # storageClass: longhorn
-  resources:
-    requests:
-      memory: 512Mi
-      cpu: 250m
-    limits:
-      memory: 1Gi
-      cpu: 500m
+    size: 3Gi
 
-# --- Nginx jako frontend (w chartach OSS to opcjonalny subchart)
 nginx:
   enabled: true
   service:
     type: LoadBalancer
     loadBalancerIP: "10.0.0.80"
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-    limits:
-      cpu: 250m
-      memory: 256Mi
 
-# --- Ingress wyłączony — korzystamy z LoadBalancer
 ingress:
   enabled: false
