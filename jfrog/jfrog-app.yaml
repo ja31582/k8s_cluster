@@ -1,0 +1,27 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jfrog
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ja31582/k8s_cluster.git
+    targetRevision: main          # <- GIT gałąź/tag/commit (nie wersja chartu)
+    path: jfrog
+    helm:
+      releaseName: jfrog
+      # Plik z Twoimi wartościami znajduje się w repo, poza katalogiem chartu.
+      # W Argo CD jest dozwolone wskazanie ścieżki względnej względem katalogu chartu.
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jfrog
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

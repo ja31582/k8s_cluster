@@ -1,45 +1,45 @@
-artifactory:
-  persistence:
-    enabled: true
-    # minimalne PVC
-    size: 10Gi
-    storageClass: longhorn
-  postgres:
-    persistence:
-      enabled: true
-      size: 5Gi
-      storageClass: longhorn
+# artifactory:
+#   persistence:
+#     enabled: true
+#     # minimalne PVC
+#     size: 10Gi
+#     storageClass: longhorn
+#   postgres:
+#     persistence:
+#       enabled: true
+#       size: 5Gi
+#       storageClass: longhorn
 
-service:
-  type: LoadBalancer
-  loadBalancerIP: 10.0.0.81
-  port: 8081
+# service:
+#   type: LoadBalancer
+#   loadBalancerIP: 10.0.0.81
+#   port: 8081
 
-replicaCount: 1
+# replicaCount: 1
 
-resources:
-  requests:
-    cpu: "500m"
-    memory: "1Gi"
-  limits:
-    cpu: "1"
-    memory: "2Gi"
+# resources:
+#   requests:
+#     cpu: "500m"
+#     memory: "1Gi"
+#   limits:
+#     cpu: "1"
+#     memory: "2Gi"
 
-ingress:
-  enabled: false
-
---- # gdy uruchomiię traefik z cert-managerem
 # ingress:
-#   enabled: true
-#   hosts:
-#     - jfrog.local
-#   annotations:
-#     kubernetes.io/ingress.class: nginx
-#     cert-manager.io/cluster-issuer: letsencrypt
-#   tls:
-#     - secretName: jfrog-tls
-#       hosts:
-#         - jfrog.local
+#   enabled: false
+
+# --- # gdy uruchomiię traefik z cert-managerem
+# # ingress:
+# #   enabled: true
+# #   hosts:
+# #     - jfrog.local
+# #   annotations:
+# #     kubernetes.io/ingress.class: nginx
+# #     cert-manager.io/cluster-issuer: letsencrypt
+# #   tls:
+# #     - secretName: jfrog-tls
+# #       hosts:
+# #         - jfrog.local
 
 
   
