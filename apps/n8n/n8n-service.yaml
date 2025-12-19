@@ -7,7 +7,7 @@ metadata:
   namespace: n8n
 spec:
   type: LoadBalancer
-  loadBalancerIP: "10.0.0.89"
+  loadBalancerIP: "10.0.0.83"
   ports:
     - name: "5678"
       port: 5678
