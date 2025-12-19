@@ -1,0 +1,29 @@
+
+argocd app create harbor \
+  --repo https://helm.goharbor.io \
+  --helm-chart harbor \
+  --revision 1.14.0 \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace harbor \
+  --sync-policy automated \
+  --sync-option CreateNamespace=true \
+  --helm-set expose.type=loadBalancer \
+  --helm-set expose.loadBalancer.IP=10.0.0.80 \
+  --helm-set expose.tls.enabled=false \
+  --helm-set persistence.enabled=true \
+  --helm-set persistence.persistentVolumeClaim.registry.size=6Gi \
+  --helm-set persistence.persistentVolumeClaim.database.size=2Gi \
+  --helm-set persistence.persistentVolumeClaim.redis.size=512Mi \
+  --helm-set harborAdminPassword='kaLIst01!'
+  
+  argocd app set harbor \
+  --helm-set externalURL=http://10.0.0.80
+
+argocd app sync harbor
+
+argocd app set harbor \
+  --helm-set jobservice.resources.requests.memory=256Mi \
+  --helm-set jobservice.resources.limits.memory=512Mi
+k
+
+
