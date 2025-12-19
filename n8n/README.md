@@ -1,28 +1,27 @@
-# n8n-kubernetes-hosting
+helm repo add n8n https://helm.n8n.io
+helm repo update
+helm search repo n8n/n8n --versions
 
-Get up and running with n8n on the following platforms:
 
-* [AWS](https://docs.n8n.io/hosting/server-setups/aws/)
-* [Azure](https://docs.n8n.io/hosting/server-setups/azure/)
-* [Google Cloud Platform](https://docs.n8n.io/hosting/server-setups/google-cloud/)
 
-If you have questions after trying the tutorials, check out the [forums](https://community.n8n.io/).
-
-## Prerequisites
-
-Self-hosting n8n requires technical knowledge, including:
-
-* Setting up and configuring servers and containers
-* Managing application resources and scaling
-* Securing servers and applications
-* Configuring n8n
-
-n8n recommends self-hosting for expert users. Mistakes can lead to data loss, security issues, and downtime. If you aren't experienced at managing servers, n8n recommends [n8n Cloud](https://n8n.io/cloud/).
-
-## Contributions
-
-For common changes, please open a PR to `main` branch and we will merge this
-into cloud provider specific branches.
-
-If you have a contribution specific to a cloud provider, please open your PR to
-the relevant branch.
+argocd app create n8n \
+  --repo https://charts.bitnami.com/bitnami \
+  --helm-chart n8n \
+  --revision 1.22.0 \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace n8n \
+  --sync-policy automated \
+  --helm-set image.tag=1.28.0 \
+  --helm-set service.type=LoadBalancer \
+  --helm-set service.loadBalancerIP=10.0.0.83 \
+  --helm-set persistence.enabled=true \
+  --helm-set persistence.size=2Gi \
+  --helm-set postgresql.enabled=true \
+  --helm-set postgresql.primary.persistence.size=3Gi \
+  --helm-set postgresql.auth.database=n8n \
+  --helm-set postgresql.auth.username=n8n \
+  --helm-set postgresql.auth.password='kaLIst01!' \
+  --helm-set postgresql.auth.postgresPassword='kaLIst01!' \
+  --helm-set resources.requests.memory=256Mi \
+  --helm-set resources.requests.cpu=100m \
+  --helm-set resources.limits.memory=512Mi
