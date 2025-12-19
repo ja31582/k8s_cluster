@@ -9,7 +9,7 @@ spec:
   sources:
     - repoURL: https://charts.jfrog.io
       chart: artifactory-oss
-      targetRevision: 107.125.9   # <- CHART VERSION (nie App Version)
+      targetRevision: 107.125.9   # CHART VERSION (nie App Version!)
       helm:
         valueFiles:
           - $values/jfrog/values.yaml
@@ -25,4 +25,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - ServerSideApply=true   # pomaga przy konfliktach patchy na STS/PVC
+      - ServerSideApply=true
