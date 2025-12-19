@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: postgres
+ namespace: n8n
+spec:
+ replicas: 1
+ selector:
+ matchLabels:
+ app: postgres
+ template:
+ metadata:
+ labels:
+ app: postgres
+ spec:
+ containers:
+ - name: postgres
+ image: postgres:15
+ env:
+ - name: POSTGRES_DB
+ value: n8n
+ - name: POSTGRES_USER
+ value: n8n
+ - name: POSTGRES_PASSWORD
+ value: n8npass
+ ports:
+ - containerPort: 5432
