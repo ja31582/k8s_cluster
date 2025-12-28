@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/ja31582/k8s_cluster.git
+    repoURL: 'https://github.com/ja31582/k8s_cluster.git'
     targetRevision: HEAD
-    path: 'manifests/n8n'
+    path: 'n8n'
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: n8n
