@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-db-deployment
+  namespace: test-app
+  labels:
+    app: my-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-db
+  template:
+    metadata:
+      labels:
+        app: my-db
+    spec:
+      containers:
+      - name: my-db-container
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: mypassword
+        volumeMounts:
+        - name: my-db-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: my-db-storage
+        persistentVolumeClaim:
+          claimName: jano-pvc

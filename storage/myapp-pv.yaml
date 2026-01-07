@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jano-pv
+spec:
+  storageClassName: jano-storage-class
+  hostPath:
+    path: /mnt/data
+  capacity:
+    storage: 5G
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+
+
+
+    
+  
