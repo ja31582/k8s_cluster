@@ -12,7 +12,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: test-app
+  namespace: hpa
 spec:
   replicas: 1
   strategy:
@@ -61,7 +61,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: frontend-hpa
-  namespace: test-app
+  namespace: hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -101,7 +101,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-svc
-  namespace: test-app
+  namespace: hpa
 spec:
   selector:
     app: frontend
@@ -144,8 +144,8 @@ kubectl exec -n hpa frontend-7fbf5fbcfb-tw5vc -- \
 ```
 
 3. Check: 
-```bash
-kubectl get hpa -n test-app -w
+```yaml
+kubectl get hpa -n hpa -w
 ```
 use k9s 
 ![alt text](image-1.png)
