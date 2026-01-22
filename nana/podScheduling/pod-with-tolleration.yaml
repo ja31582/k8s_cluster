@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: taint-with-toleration
+  namespace: test-app
+spec:
+  nodeName: k8s-master
+  # tolerations:          nie jest to efektywne, poniewaz pod jest przypisany do konkretnego noda - nodeName: k8s-master
+  # - effect: NoExecute
+  #   operator: Exists
+  #   seconds: 3600
+  matchLabels:
+    app: nginx
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
