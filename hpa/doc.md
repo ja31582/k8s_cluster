@@ -156,7 +156,7 @@ requests:
   memory: "250Mi
 ```
 
-5. Check downtime: (k9s)
+5. Check downtime:
 ```yaml
 kubectl rollout status deployment frontend -n hpa
 
