@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: nginx:1.24
+        image: nginx:1.25.0
         # command: 
         # - /bin/sh
         # - -c
