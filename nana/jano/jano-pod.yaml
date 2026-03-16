@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: jano
+  labels:
+    app: jano-dj
+  name: jano-dj
+spec:
+  containers:
+  - env:
+    - name: nginx
+      value: prd
+    image: nginx:1.24.0
+    name: jano-dj
+    ports:
+    - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
