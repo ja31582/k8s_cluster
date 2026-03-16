@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jano-dj
+  name: jano-ing
   namespace: jano
   labels:
     app: jano-dj

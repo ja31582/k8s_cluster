@@ -4,7 +4,7 @@ metadata:
   namespace: jano
   labels:
     app: jano-dj
-  name: jano-dj
+  name: jano-svc
 spec:
   ports:
   - name: 8080-80

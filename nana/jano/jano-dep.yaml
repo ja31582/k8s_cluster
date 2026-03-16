@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: jano-dj
-  name: jano-dj
+  name: jano-deploy
   namespace: jano
 spec:
   replicas: 2
