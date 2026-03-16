@@ -6,14 +6,15 @@ metadata:
   labels:
     app: jano-dj
 spec:
+  ingressClassName: nginx
   rules:
   - host: example.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
-            name: jano-dj
+            name: jano-svc
             port:
               number: 8080
+        path: /
+        pathType: Exact
