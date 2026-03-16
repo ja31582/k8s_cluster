@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jano-dj
+  name: jano-dj
+  namespace: jano
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jano-dj
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: jano-dj
+    spec:
+      containers:
+      - image: nginx:1.24.0
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}

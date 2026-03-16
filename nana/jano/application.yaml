@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jano-dj
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ja31582/k8s_cluster.git
+    targetRevision: HEAD
+    path: nana/jano
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jano
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

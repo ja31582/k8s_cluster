@@ -1,0 +1,9 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Environment
+metadata:
+  name: jano-dj
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ja31582/k8s_cluster.git
