@@ -1,20 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jano-ing
+  name: simple
   namespace: jano
-  labels:
-    app: jano-dj
+  labe
+  
 spec:
-  ingressClassName: nginx
   rules:
-  - host: jano.local
+  - host: foo.com
     http:
       paths:
       - backend:
           service:
-            name: jano-svc
+            name: svc1
             port:
               number: 8080
-        path: /
+        path: /bar
         pathType: Exact
+status:
+  loadBalancer: {}
