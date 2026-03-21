@@ -4,10 +4,10 @@ metadata:
   name: simple
   namespace: jano
   labe
-  
+
 spec:
   rules:
-  - host: foo.com
+  - host: jano-one.local
     http:
       paths:
       - backend:
